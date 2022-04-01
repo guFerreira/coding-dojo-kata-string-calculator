@@ -33,4 +33,12 @@ public class TestStringCalculator {
 
         Assertions.assertEquals("3", result);
     }
+
+    @Test
+    public void testStringWithMultipleNumbers(){
+        String numbersForSumEmpty = "1,2,5,10";
+        String result = stringCalculator.add(numbersForSumEmpty);
+
+        Assertions.assertEquals("18", result);
+    }
 }
