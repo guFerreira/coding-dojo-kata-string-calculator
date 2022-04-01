@@ -6,9 +6,14 @@ public class StringCalculator {
         if(number.equals("")){
             return "0";
         }
+        String [] numbers = number.split(",");
+        if(numbers.length == 1){
+            return numbers[0];
+        }
+
         int sum = 0;
         if(number.contains(",")){
-            String [] numbers = number.split(",");
+
             for (int i = 0; i < numbers.length; i++){
                 sum += Integer.parseInt(numbers[i]);
             }
