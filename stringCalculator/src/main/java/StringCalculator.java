@@ -1,5 +1,6 @@
 import org.junit.platform.commons.util.StringUtils;
 
+
 public class StringCalculator {
 
     public String add(String number){
