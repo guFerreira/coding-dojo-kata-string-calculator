@@ -9,7 +9,7 @@ public class StringCalculator {
         }
 
         this.verifySeparatorNumberFormatIsCorrect(number);
-
+        this.verifyDelimiterInFinalString(number);
         String [] numbers = number.split(",|\n");
 
         if(numbers.length == 1){
@@ -19,7 +19,7 @@ public class StringCalculator {
         return this.sumMultipleNumbersInString(numbers);
     }
 
-    private boolean verifySeparatorNumberFormatIsCorrect(String numbers){
+    private void verifySeparatorNumberFormatIsCorrect(String numbers){
         if (numbers.contains(",\n")){
             for (int i = 0; i < numbers.length()-1;i++) {
                 if (numbers.charAt(i) == ',' && numbers.charAt(i+1) == '\n'){
@@ -29,7 +29,12 @@ public class StringCalculator {
                 }
             }
         }
-        return true;
+    }
+
+    private void verifyDelimiterInFinalString(String numbers){
+        if(numbers.charAt(numbers.length()-1) == ',' || numbers.charAt(numbers.length()-1) == '\n'){
+            throw new IllegalArgumentException("Number expected but EOF found.");
+        }
     }
 
     private String sumMultipleNumbersInString(String[] numbers){
