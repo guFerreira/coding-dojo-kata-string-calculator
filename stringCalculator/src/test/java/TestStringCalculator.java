@@ -50,5 +50,20 @@ public class TestStringCalculator {
         Assertions.assertEquals("6", result);
     }
 
+    @Test
+    public void testErrorFormatSeparatorInEntryNumbers(){
+        this.stringCalculator = new StringCalculator();
+        String numbersSeparatedByNewLine= "1,\n2,3";
+
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class,() ->{
+            stringCalculator.add(numbersSeparatedByNewLine);
+        });
+        System.out.println(exception
+                .getMessage());
+        Assertions.assertTrue(exception
+                .getMessage()
+                .contains("Number expected but '\\n' found at position 2."));
+    }
+
 
 }

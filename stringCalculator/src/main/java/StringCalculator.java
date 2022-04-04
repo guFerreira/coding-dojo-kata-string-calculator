@@ -7,6 +7,9 @@ public class StringCalculator {
         if(number.equals("")){
             return "0";
         }
+
+        this.verifySeparatorNumberFormatIsCorrect(number);
+
         String [] numbers = number.split(",|\n");
 
         if(numbers.length == 1){
@@ -16,6 +19,19 @@ public class StringCalculator {
         return this.sumMultipleNumbersInString(numbers);
     }
 
+    private boolean verifySeparatorNumberFormatIsCorrect(String numbers){
+        if (numbers.contains(",\n")){
+            for (int i = 0; i < numbers.length()-1;i++) {
+                if (numbers.charAt(i) == ',' && numbers.charAt(i+1) == '\n'){
+                    int positionIncorrectSeparator = i+1;
+                    throw new IllegalArgumentException("Number expected but '\\n' found" +
+                            " at position "+positionIncorrectSeparator+".");
+                }
+            }
+        }
+        return true;
+    }
+
     private String sumMultipleNumbersInString(String[] numbers){
         int sum = 0;
         for (int i = 0; i < numbers.length; i++){
@@ -23,4 +39,6 @@ public class StringCalculator {
         }
         return Integer.toString(sum);
     }
+
+
 }
