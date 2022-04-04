@@ -58,12 +58,23 @@ public class TestStringCalculator {
         Exception exception = Assertions.assertThrows(IllegalArgumentException.class,() ->{
             stringCalculator.add(numbersSeparatedByNewLine);
         });
-        System.out.println(exception
-                .getMessage());
+
         Assertions.assertTrue(exception
                 .getMessage()
                 .contains("Number expected but '\\n' found at position 2."));
     }
 
+    @Test
+    public void testErrorFormatDelimiterInFinalString(){
+        this.stringCalculator = new StringCalculator();
+        String numbersWithDelimiterInFinal= "1,3,";
+
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class,() ->{
+            stringCalculator.add(numbersWithDelimiterInFinal);
+        });
+        Assertions.assertTrue(exception
+                .getMessage()
+                .contains("Number expected but EOF found."));
+    }
 
 }
