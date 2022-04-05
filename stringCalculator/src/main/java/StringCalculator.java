@@ -26,8 +26,10 @@ public class StringCalculator {
         }
 
         String [] numbers = number.split(",|\n");
+        this.verifyNegativeNumbers(number);
         this.verifySeparatorNumberFormatIsCorrect(number);
         this.verifyDelimiterInFinalString(number);
+
 
         return this.sumMultipleNumbersInString(numbers);
     }
@@ -59,7 +61,27 @@ public class StringCalculator {
     }
 
     private void verifyNegativeNumbers(String formattedNumbers) {
-        
+        String regex = "(\\-[\\d]+)+";
+        List<String> negativeNumbers = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(formattedNumbers);
+        while(matcher.find()) {
+            negativeNumbers.add(matcher.group());
+        }
+        System.out.println("Negative not allowed :"
+                +this.formatNegativeNumbers(negativeNumbers));
+        throw new IllegalArgumentException("Negative not allowed :"
+                + this.formatNegativeNumbers(negativeNumbers));
+    }
+
+    private String formatNegativeNumbers(List<String> negativeNumber){
+        String formatedNumber = "";
+        for (int i =0; i < negativeNumber.size()-1;i++) {
+            formatedNumber += (" " + negativeNumber.get(i) + ",");
+        }
+        formatedNumber += " "+negativeNumber.get(negativeNumber.size()-1);
+        return formatedNumber;
     }
 
     private void verifyBetweenNumberSeparators(String formattedNumbers, String delimiter) {
