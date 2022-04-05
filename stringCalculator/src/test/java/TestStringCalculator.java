@@ -113,4 +113,17 @@ public class TestStringCalculator {
 
         Assertions.assertEquals("5", result);
     }
+
+    @Test
+    public void testErrorBetweenTwoNumberSeparators(){
+        this.stringCalculator = new StringCalculator();
+        String numbersWithTwoSeparators= "//|\n1|2,3";
+
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class,() ->{
+            stringCalculator.add(numbersWithTwoSeparators);
+        });
+        Assertions.assertTrue(exception
+                .getMessage()
+                .contains("'|' expected but ',' found at position 3."));
+    }
 }
