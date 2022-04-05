@@ -41,8 +41,8 @@ public class StringCalculator {
         String delimiter = this.extractCustomSeparator(customSeparator[0]);
         String formattedNumbers = customSeparator[1];
 
+        this.verifyBetweenNumberSeparators(formattedNumbers, delimiter);
         String [] numbers = formattedNumbers.split(delimiter);
-
         return this.sumMultipleNumbersInString(numbers);
     }
 
@@ -57,6 +57,20 @@ public class StringCalculator {
         return delimiter;
     }
 
+    private void verifyBetweenNumberSeparators(String formattedNumbers, String delimiter) {
+        String regex = "([\\d]+)|(["+delimiter+"])";
+        Pattern pattern = Pattern.compile(regex);
+        for (int i = 0; i < formattedNumbers.length()-1; i++){
+            Character character = formattedNumbers.charAt(i);
+            Matcher matcher = pattern.matcher(character.toString());
+            if (!matcher.find()){
+                throw new IllegalArgumentException("\'" + delimiter.replace("\\","")
+                        + "\' expected but \'"+character+"\' found at position "+i+".");
+            }
+        }
+
+    }
+
     private void verifySeparatorNumberFormatIsCorrect(String numbers){
         for(int i = 0; i < this.delimiters.size(); i++){
             for(int j = 0; j < this.delimiters.size(); j++){
@@ -67,8 +81,6 @@ public class StringCalculator {
     }
 
     private void verifyInvalidDelimiter(String delimiter, String numbers){
-        System.out.println("delimiter:"+delimiter);
-        System.out.println("char com problema:"+numbers.charAt(numbers.indexOf(delimiter)+1));
         if (numbers.contains(delimiter)){
             throw new IllegalArgumentException("Number expected but '\\n' found" +
                     " at position "+ (numbers.indexOf(delimiter)+1) +".");
@@ -84,10 +96,13 @@ public class StringCalculator {
     }
 
     private String sumMultipleNumbersInString(String[] numbers){
-
         if(numbers.length == 1){
             return numbers[0];
         }
+        return sumNumbersInStringArray(numbers);
+    }
+
+    private String sumNumbersInStringArray(String[] numbers){
         int sum = 0;
         for (int i = 0; i < numbers.length; i++){
             sum += Integer.parseInt(numbers[i]);
