@@ -6,7 +6,7 @@ public class TestStringCalculator {
     StringCalculator stringCalculator;
 
     @BeforeEach
-    private void initObjects(){
+    private void setUp(){
         this.stringCalculator = new StringCalculator();
     }
 
@@ -87,5 +87,14 @@ public class TestStringCalculator {
         Assertions.assertTrue(exception
                 .getMessage()
                 .contains("Number expected but EOF found."));
+    }
+
+    @Test
+    public void testCustomSeparators(){
+        String numbersWithCustomSeparator= "//;\n1;2";
+        String result = stringCalculator.add(numbersWithCustomSeparator);
+
+        Assertions.assertEquals("3", result);
+
     }
 }
