@@ -97,4 +97,20 @@ public class TestStringCalculator {
         Assertions.assertEquals("3", result);
 
     }
+
+    @Test
+    public void testCustomSeparatorsWithPipe(){
+        String numbersWithCustomSeparator= "//|\n1|2|3";
+        String result = stringCalculator.add(numbersWithCustomSeparator);
+
+        Assertions.assertEquals("6", result);
+    }
+
+    @Test
+    public void testCustomSeparatorsWithWord(){
+        String numbersWithCustomSeparator= "//sep\n2sep3";
+        String result = stringCalculator.add(numbersWithCustomSeparator);
+
+        Assertions.assertEquals("5", result);
+    }
 }
