@@ -6,7 +6,11 @@ import java.util.regex.Pattern;
 
 public class StringCalculator {
     private List<String> delimiters;
-    private static String PATTERN_DELIMITER = ",|\n";
+
+    public StringCalculator() {
+        this.delimiters = new ArrayList<>();
+        this.addPatternsDelimiters();
+    }
 
     private void addPatternsDelimiters(){
         this.delimiters.add(",");
@@ -17,12 +21,11 @@ public class StringCalculator {
         if(number.equals("")){
             return "0";
         }
-
         if (isCustomSeparator(number)){
             return this.sumWithCustomDelimiter(number);
         }
 
-        String [] numbers = number.split(PATTERN_DELIMITER);
+        String [] numbers = number.split(",|\n");
         this.verifySeparatorNumberFormatIsCorrect(number);
         this.verifyDelimiterInFinalString(number);
 
@@ -34,39 +37,24 @@ public class StringCalculator {
     }
 
     private String sumWithCustomDelimiter(String input){
-        String formattedNumbers = this.formatNumbersWithCustomSeparator(input);
-        String [] numbers = formattedNumbers.split(";");
+        String[] customSeparator = input.split("\n");
+        String delimiter = this.extractCustomSeparator(customSeparator[0]);
+        String formattedNumbers = customSeparator[1];
+
+        String [] numbers = formattedNumbers.split(delimiter);
+
         return this.sumMultipleNumbersInString(numbers);
     }
 
-    private String formatNumbersWithCustomSeparator(String numbers){
-        String delimiter = this.extractCustomSeparator(numbers);
-
-        return this.extractNumbersByCustomSeparator(numbers);
-
-    }
-
     private String extractCustomSeparator(String numbers){
-        String regexCustomSeparator = "^\\/{2}([\\w;,_]+)$";
-        Pattern pattern = Pattern.compile(regexCustomSeparator);
-        Matcher matcher = pattern.matcher(numbers);
-
-        if (matcher.find()){
-            return matcher.group(1);
+        String delimiter = "";
+        for (int i = 2; i <= numbers.length()-1;i++){
+            delimiter += numbers.charAt(i);
         }
-        return "";
-    }
-
-    private String extractNumbersByCustomSeparator(String numbers){
-        String regexCustomSeparator = "\n([\\w;,_]+)$";
-        Pattern pattern = Pattern.compile(regexCustomSeparator);
-        Matcher matcher = pattern.matcher(numbers);
-
-        if (matcher.find()){
-            System.out.println(matcher.group(1));
-            return matcher.group(1);
+        if(delimiter.equals("|")){
+            return "\\|";
         }
-        return "";
+        return delimiter;
     }
 
     private void verifySeparatorNumberFormatIsCorrect(String numbers){
