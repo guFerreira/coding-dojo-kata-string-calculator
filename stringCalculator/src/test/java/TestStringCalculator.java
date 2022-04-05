@@ -126,4 +126,30 @@ public class TestStringCalculator {
                 .getMessage()
                 .contains("'|' expected but ',' found at position 3."));
     }
+
+    @Test
+    public void testErrorNegativeNumbers(){
+        this.stringCalculator = new StringCalculator();
+        String negativeNumbers= "-1,2";
+
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class,() ->{
+            stringCalculator.add(negativeNumbers);
+        });
+        Assertions.assertTrue(exception
+                .getMessage()
+                .contains("Negative not allowed : -1"));
+    }
+
+    @Test
+    public void testErrorMultipleNegativeNumbers(){
+        this.stringCalculator = new StringCalculator();
+        String negativeNumbers= "2,-4,-5";
+
+        Exception exception = Assertions.assertThrows(IllegalArgumentException.class,() ->{
+            stringCalculator.add(negativeNumbers);
+        });
+        Assertions.assertTrue(exception
+                .getMessage()
+                .contains("Negative not allowed : -4, -5"));
+    }
 }

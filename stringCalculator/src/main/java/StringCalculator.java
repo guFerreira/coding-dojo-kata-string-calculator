@@ -41,6 +41,7 @@ public class StringCalculator {
         String delimiter = this.extractCustomSeparator(customSeparator[0]);
         String formattedNumbers = customSeparator[1];
 
+        this.verifyNegativeNumbers(formattedNumbers);
         this.verifyBetweenNumberSeparators(formattedNumbers, delimiter);
         String [] numbers = formattedNumbers.split(delimiter);
         return this.sumMultipleNumbersInString(numbers);
@@ -55,6 +56,10 @@ public class StringCalculator {
             return "\\|";
         }
         return delimiter;
+    }
+
+    private void verifyNegativeNumbers(String formattedNumbers) {
+        
     }
 
     private void verifyBetweenNumberSeparators(String formattedNumbers, String delimiter) {
